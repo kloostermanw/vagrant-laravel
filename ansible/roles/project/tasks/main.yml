@@ -1,0 +1,58 @@
+---
+
+- name: create /etc/httpd/conf.d/{{project}}.conf
+  template:
+    src: vhost.conf.j2
+    dest: /etc/httpd/conf.d/{{project}}.conf
+
+- name: create /etc/httpd/conf.d/{{project}}-ssl.conf
+  template:
+    src: vhost.ssl.conf.j2
+    dest: /etc/httpd/conf.d/{{project}}-ssl.conf
+
+- name: Copy star.kloos.dev.crt
+  copy:
+    src: star.kloos.dev.crt
+    dest: /etc/pki/tls/certs/
+
+- name: Copy star.kloos.dev.key
+  copy:
+    src: star.kloos.dev.key
+    dest: /etc/pki/tls/private/
+
+- name: composer install
+  composer:
+    command: install
+    working_dir: /var/www/vhosts/{{project}}/src
+    no_dev: no
+
+- name: create database tables.
+  command: php artisan migrate
+  args:
+    chdir: /var/www/vhosts/{{project}}/src
+
+- name: fill database with test data.
+  command: php artisan db:seed
+  args:
+    chdir: /var/www/vhosts/{{project}}/src
+
+- name: Allow httpd to access storage
+  sefcontext:
+    target: '/var/www/vhosts/{{project}}/src/(storage/.*)?'
+    setype: httpd_sys_rw_content_t
+    state: present
+
+- name: Allow httpd to access bootstap/cache
+  sefcontext:
+    target: '/var/www/vhosts/{{project}}/src/bootstrap/(cache/.*)?'
+    setype: httpd_sys_rw_content_t
+    state: present
+
+- name: Apply new SELinux file context to filesystem
+  command: restorecon -irv /var/www/vhosts/{{project}}/*
+
+- name: restart httpd
+  service:
+    name: httpd
+    enabled: yes
+    state: restarted

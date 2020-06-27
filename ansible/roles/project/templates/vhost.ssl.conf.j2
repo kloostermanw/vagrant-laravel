@@ -1,0 +1,19 @@
+<IfModule mod_ssl.c>
+<VirtualHost *:443>
+    DocumentRoot /var/www/vhosts/{{project}}/live/public
+    ServerAdmin wiebe@kloosterman.cc
+    ServerName {{hostname}}
+    <Directory "/var/www/vhosts/{{project}}/live/public">
+        AllowOverride All
+    </Directory>
+    ServerSignature email
+    TransferLog logs/{{hostname}}_access_log
+    ErrorLog    logs/{{hostname}}_error_log
+    SSLCertificateFile /etc/pki/tls/certs/star.kloos.dev.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/star.kloos.dev.key
+    LogLevel warn
+    SSLEngine on
+    SSLProtocol all -SSLv2 -SSLv3
+    SSLCipherSuite HIGH:3DES:!aNULL:!MD5:!SEED:!IDEA
+</VirtualHost>
+</IfModule>

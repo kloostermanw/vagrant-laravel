@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="database">
+
+    <target name="database">
+        <echo msg="Deploying database..." />
+
+        <exec
+                command="php artisan migrate --force"
+                dir="${path.targetdir}"
+                checkreturn="true" />
+
+
+        <echo msg="Resetting permissions on system log files" />
+
+        <chmod mode="0777">
+            <fileset dir="${path.targetdir}${path.logsdir}">
+                <include name="**/*.log"/>
+            </fileset>
+        </chmod>
+
+    </target>
+
+    <target name="database-init">
+        <echo msg="Initialising database..." />
+        <exec
+                command="php artisan migrate --force"
+                dir="${path.targetdir}"
+                checkreturn="true" />
+
+    </target>
+
+</project>

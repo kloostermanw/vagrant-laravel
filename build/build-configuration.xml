@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="configuration">
+
+    <target name="configuration">
+        <echo msg="Writing configuration files..." />
+
+        <echo msg="Writing .env..." />
+        <copy file="${project.basedir}/build/templates/env" tofile="${path.targetdir}.env" overwrite="true">
+            <filterchain>
+                <replacetokens begintoken="%%" endtoken="%%">
+                    <token key="project_environment" value="${project.env}" />
+                    <token key="project_key" value="${project.key}" />
+                    <token key="project_debug" value="${project.debug}" />
+                    <token key="project_version" value="${project.version}" />
+                    <token key="project_url" value="${project.url}" />
+                    <token key="db_host" value="${db.host}" />
+                    <token key="db_database" value="${db.database}" />
+                    <token key="db_username" value="${db.user}" />
+                    <token key="db_password" value="${db.password}" />
+                    <token key="facebook_client_id" value="${facebook.client.id}" />
+                    <token key="facebook_client_secret" value="${facebook.client.secret}" />
+                    <token key="facebook_url" value="${facebook.url}" />
+                    <token key="google_client_id" value="${google.client.id}" />
+                    <token key="google_client_secret" value="${google.client.secret}" />
+                    <token key="google_url" value="${google.url}" />
+                    <token key="slack_webhook_url" value="${slack.webhook.url}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Writing .htaccess..." />
+        <copy file="${project.basedir}/build/templates/htaccess" tofile="${path.targetdir}.htaccess" overwrite="true" />
+
+    </target>
+
+</project>

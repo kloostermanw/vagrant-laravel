@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Kloosterman.cc" default="main" basedir=".">
+    <property file="./build/properties/default.properties" />
+
+    <if>
+        <isset property="build.env" />
+        <then>
+            <echo message="Overwriting default.properties with ${build.env}.properties" />
+            <property file="./build/properties/${build.env}.properties" override="true" />
+        </then>
+    </if>
+
+    <property file="${path.basedir}/password.properties" override="true" />
+
+<target name="main">
+    <echo message="+------------------------------------------+"/>
+    <echo message="| Deploying changeme                       |"/>
+    <echo message="+------------------------------------------+"/>
+
+    <exec command="basename `pwd`"
+          dir="${project.basedir}"
+          outputProperty="defaultversion"
+          checkreturn="true" />
+
+    <tstamp>
+        <format property="project.date" pattern="%FT%T.000000Z" />
+    </tstamp>
+
+    <propertyprompt propertyName="project.version" promptText="Enter your version number" defaultValue="${defaultversion}" />
+    <property name="path.targetdir" value="${path.basedir}${project.version}/" />
+    <property name="path.sourcedir" value="${project.basedir}/src/" />
+
+    <phing phingfile="${project.basedir}/build/build-check-version.xml" target="check-version" haltonfailure="true" />
+    <phing phingfile="${project.basedir}/build/build-files.xml" target="user-files" haltonfailure="true" />
+    <phing phingfile="${project.basedir}/build/build-configuration.xml" target="configuration" haltonfailure="true" />
+    <phing phingfile="${project.basedir}/build/build-database.xml" target="database" haltonfailure="true" />
+    <phing phingfile="${project.basedir}/build/build-switch.xml" target="switch" haltonfailure="true" />
+
+</target>
+</project>

@@ -1,0 +1,8 @@
+<VirtualHost *:80>
+    ServerAdmin wiebe@kloosterman.cc
+    ServerName {{hostname}}
+    TransferLog logs/{{hostname}}_access_log
+    ErrorLog    logs/{{hostname}}_error_log
+    RewriteEngine on
+    RewriteRule ^ https://{{hostname}}%{REQUEST_URI} [END,NE,R=permanent]
+</VirtualHost>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="user-files">
+
+    <target name="user-files">
+        <echo msg="Copying user defined files..." />
+
+        <fileset dir="${path.sourcedir}" id="srcfiles">
+            <include name="**/**"/>
+        </fileset>
+
+        <copy todir="${path.targetdir}">
+            <fileset refid="srcfiles"/>
+        </copy>
+
+        <chmod mode="0777">
+            <fileset dir="${path.targetdir}${path.storagedir}">
+                <include name="**/**"/>
+            </fileset>
+            <fileset dir="${path.targetdir}${path.logsdir}">
+                <include name="**/**"/>
+            </fileset>
+        </chmod>
+
+        <echo msg="Copying uploaded files..." />
+        <exec
+                command="readlink -f live"
+                dir="${path.basedir}"
+                checkreturn="true"
+                outputProperty="currentdir" />
+
+        <fileset dir="${currentdir}/${path.uploadsdir}" id="srcfiles">
+            <include name="**/**"/>
+        </fileset>
+
+        <copy todir="${path.targetdir}${path.uploadsdir}">
+            <fileset refid="srcfiles"/>
+        </copy>
+
+        <echo msg="Pulling in vendor packages..." />
+
+        <exec
+                command="/usr/local/bin/composer install --optimize-autoloader --no-dev"
+                dir="${path.targetdir}"
+                passthru="true"
+                checkreturn="true" />
+
+        <echo msg="Removing .git and .svn folders from the vendor folder..." />
+
+        <fileset dir="${path.targetdir}${path.vendordir}" defaultexcludes="false" id="deleteFiles">
+            <include name="**/.git/**" />
+        </fileset>
+
+        <delete includeemptydirs="true" verbose="true">
+            <fileset refid="deleteFiles" />
+        </delete>
+
+        <echo msg="Set file ownership..." />
+
+        <chown user="${permission.user}" group="${permission.group}" quiet="true">
+            <fileset dir="${path.targetdir}">
+                <include name="**/**"/>
+            </fileset>
+        </chown>
+
+        <echo msg="Fixing execute permissions on vendor .php files..." />
+
+        <chmod mode="0777">
+            <fileset dir="${path.targetdir}${path.vendordir}">
+                <include name="**/*.php"/>
+            </fileset>
+        </chmod>
+
+        <echo msg="Setting selinux permissions on the storage directory" />
+
+        <exec
+                command="chcon -t httpd_sys_content_rw_t storage -R"
+                dir="${path.targetdir}"
+                passthru="true"
+                checkreturn="true" />
+
+    </target>
+
+</project>

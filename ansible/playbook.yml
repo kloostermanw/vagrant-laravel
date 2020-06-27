@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - basic
+    - web
+    - db
+    - geerlingguy.composer
+    - phing
+    - project

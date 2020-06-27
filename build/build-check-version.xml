@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="check-version">
+
+    <target name="check-version">
+        <echo msg="Checking existing versions..." />
+
+        <if>
+            <available file="${path.targetdir}" />
+            <then>
+                <fail message="Version already exists! Remove version folder and try again." />
+            </then>
+        </if>
+
+    </target>
+
+</project>

@@ -1,0 +1,35 @@
+---
+- debug:
+    msg: "Performing Yum update of server {{ ansible_hostname }}"
+
+- name: Perform yum update of all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: "Basic packets"
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - vim
+    - policycoreutils-python
+    - bind-utils
+    - yum-utils
+    - wget
+    - unzip
+    - open-vm-tools
+
+- name: Install ntp
+  yum: name=ntp state=present
+  tags: ntp
+
+- name: Configure ntp file
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  tags: ntp
+  notify: restart ntp
+
+- name: Start the ntp service
+  service: name=ntpd state=started enabled=yes
+  tags: ntp
+
