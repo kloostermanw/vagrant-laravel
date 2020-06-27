@@ -10,4 +10,4 @@ arguments = none
 # editor vim | nano | none
 editor = none
 # The edit will load the following file
-filename = CHANGELOG
+filename = none
