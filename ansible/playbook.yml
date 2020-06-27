@@ -7,4 +7,5 @@
     - db
     - geerlingguy.composer
     - phing
+    - laravel
     - project

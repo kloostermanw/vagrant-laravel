@@ -1,0 +1,10 @@
+---
+
+- name: Check if Laravel is already installed
+  stat: path={{basedir}}/{{project}}/src
+  register: p
+  when: p.stat.isdir is defined and p.stat.isdir
+
+- name: Install Laravel when dir not existing
+  include: install_laravel.yml
+  when: not p.stat.exists

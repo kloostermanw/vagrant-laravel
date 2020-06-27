@@ -1,9 +1,9 @@
 <IfModule mod_ssl.c>
 <VirtualHost *:443>
-    DocumentRoot /var/www/vhosts/{{project}}/live/public
-    ServerAdmin wiebe@kloosterman.cc
+    DocumentRoot {{basedir}}/{{project}}/live/public
+    ServerAdmin {{server_admin}}
     ServerName {{hostname}}
-    <Directory "/var/www/vhosts/{{project}}/live/public">
+    <Directory "{{basedir}}/{{project}}/live/public">
         AllowOverride All
     </Directory>
     ServerSignature email

@@ -23,33 +23,33 @@
 - name: composer install
   composer:
     command: install
-    working_dir: /var/www/vhosts/{{project}}/src
+    working_dir: {{basedir}}/{{project}}/src
     no_dev: no
 
 - name: create database tables.
   command: php artisan migrate
   args:
-    chdir: /var/www/vhosts/{{project}}/src
+    chdir: {{basedir}}/{{project}}/src
 
 - name: fill database with test data.
   command: php artisan db:seed
   args:
-    chdir: /var/www/vhosts/{{project}}/src
+    chdir: {{basedir}}/{{project}}/src
 
 - name: Allow httpd to access storage
   sefcontext:
-    target: '/var/www/vhosts/{{project}}/src/(storage/.*)?'
+    target: '{{basedir}}/{{project}}/src/(storage/.*)?'
     setype: httpd_sys_rw_content_t
     state: present
 
 - name: Allow httpd to access bootstap/cache
   sefcontext:
-    target: '/var/www/vhosts/{{project}}/src/bootstrap/(cache/.*)?'
+    target: '{{basedir}}/{{project}}/src/bootstrap/(cache/.*)?'
     setype: httpd_sys_rw_content_t
     state: present
 
 - name: Apply new SELinux file context to filesystem
-  command: restorecon -irv /var/www/vhosts/{{project}}/*
+  command: restorecon -irv {{basedir}}/{{project}}/*
 
 - name: restart httpd
   service:
