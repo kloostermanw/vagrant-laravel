@@ -2,10 +2,10 @@
 - hosts: all
   become: true
   roles:
-#    - basic
-#    - web
-#    - db
-#    - geerlingguy.composer
-#    - phing
+    - basic
+    - web
+    - db
+    - geerlingguy.composer
+    - phing
     - laravel
     - project
