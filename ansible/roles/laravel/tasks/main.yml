@@ -1,0 +1,19 @@
+---
+
+- name: Check if Laravel is already installed.
+  stat:
+    path: "{{basedir}}/{{project}}/src"
+  register: file_details
+
+- debug:
+    msg: "The directory {{basedir}}/{{project}}/src not exists"
+  when: not file_details.stat.exists
+
+- debug:
+    msg: "The directory {{basedir}}/{{project}}/src exists"
+  when: file_details.stat.exists
+
+
+- name: Install Laravel when dir not exists
+  include: install_laravel.yml
+  when: not file_details.stat.exists

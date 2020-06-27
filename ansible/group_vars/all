@@ -1,13 +1,17 @@
 ---
-# Variables listed here are applicable to all host groups
+# Variables listed here are applicable to the whole project
+# Also for the vagrant installation
 
-httpd_port: 80
-ssl_port: 443
-ntpserver: time.google.com
+# vagrant
+hostname: changeme.kloos.dev
+basedir: /var/www/vhosts
 project: changeme
 ipaddress: 192.168.33.199
 
-# DB
+# Base
+ntpserver: time.google.com
+
+# Database
 mysqlservice: mysqld
 mysql_port: 3306
 dbuser: "{{project}}_user"
@@ -15,7 +19,10 @@ dbhost: localhost
 dbname: "{{project}}"
 upassword: S9LW1bTdHdPm3b4
 
-hostname: changeme.kloos.dev
-documentroot: /var/www/vhosts/{{project}}/live/public
+# Apache / Httpd
+httpd_port: 80
+ssl_port: 443
+documentroot: "{{basedir}}/{{project}}/live/public"
+server_admin: wiebe@kloosterman.cc
 
 httpd_config : /etc/httpd/conf/httpd.conf

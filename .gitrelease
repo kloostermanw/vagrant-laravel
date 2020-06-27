@@ -1,0 +1,13 @@
+[DEFAULT]
+verbose = true
+file_commit_message = docs: update CHANGELOG
+# command that runs after the release is created
+# command = none | /path/to/command
+command = none
+# arguments = none | --from {current_release} --to {new_release} --release {new_release}
+arguments = none
+# Specify the editor of choice
+# editor vim | nano | none
+editor = none
+# The edit will load the following file
+filename = none
