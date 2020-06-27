@@ -23,18 +23,18 @@
 - name: composer install
   composer:
     command: install
-    working_dir: {{basedir}}/{{project}}/src
+    working_dir: "{{basedir}}/{{project}}/src"
     no_dev: no
 
-- name: create database tables.
-  command: php artisan migrate
-  args:
-    chdir: {{basedir}}/{{project}}/src
-
-- name: fill database with test data.
-  command: php artisan db:seed
-  args:
-    chdir: {{basedir}}/{{project}}/src
+#- name: create database tables.
+#  command: php artisan migrate
+#  args:
+#    chdir: {{basedir}}/{{project}}/src
+#
+#- name: fill database with test data.
+#  command: php artisan db:seed
+#  args:
+#    chdir: {{basedir}}/{{project}}/src
 
 - name: Allow httpd to access storage
   sefcontext:
