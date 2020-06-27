@@ -22,7 +22,7 @@ upassword: S9LW1bTdHdPm3b4
 # Apache / Httpd
 httpd_port: 80
 ssl_port: 443
-documentroot: {{basedir}}/{{project}}/live/public
+documentroot: "{{basedir}}/{{project}}/live/public"
 server_admin: wiebe@kloosterman.cc
 
 httpd_config : /etc/httpd/conf/httpd.conf
