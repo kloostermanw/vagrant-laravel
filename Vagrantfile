@@ -3,14 +3,14 @@
 
 require 'yaml'
 
-current_dir    = File.dirname(File.expand_path(__FILE__))
-configs        = YAML.load_file("#{current_dir}/ansible/group_vars/all")
+current_dir = File.dirname(File.expand_path(__FILE__))
+config      = YAML.load_file("#{current_dir}/ansible/group_vars/all")
 
 
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
-  config.vm.hostname = vagrant_config['hostname']
-  config.vm.network "private_network", ip: vagrant_config['public_ip']
+  config.vm.hostname = config['hostname']
+  config.vm.network "private_network", ip: config['public_ip']
 
   if Vagrant.has_plugin?("vagrant-vbguest")
     config.vbguest.auto_update = false
