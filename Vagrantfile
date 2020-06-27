@@ -9,7 +9,7 @@ configs        = YAML.load_file("#{current_dir}/ansible/group_vars/all")
 
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
-  config.vm.hostname = HOSTNAME
+  config.vm.hostname = vagrant_config['hostname']
   config.vm.network "private_network", ip: vagrant_config['public_ip']
 
   if Vagrant.has_plugin?("vagrant-vbguest")
