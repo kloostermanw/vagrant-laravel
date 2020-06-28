@@ -27,6 +27,18 @@
     regexp: '^\<VirtualHost\ \_default\_'
     line: "<VirtualHost _default_:8443>"
 
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^SSLCertificateFile'
+    line: "SSLCertificateFile /etc/pki/tls/certs/star.kloos.dev.crt"
+
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^SSLCertificateKeyFile'
+    line: "SSLCertificateKeyFile /etc/pki/tls/private/star.kloos.dev.key"
+
 - name: composer install
   composer:
     command: install
