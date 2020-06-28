@@ -20,6 +20,13 @@
     src: star.kloos.dev.key
     dest: /etc/pki/tls/private/
 
+# <VirtualHost _default_:443>
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^\<VirtualHost\ \_default\_'
+    line: "<VirtualHost _default_:8443>"
+
 - name: composer install
   composer:
     command: install
