@@ -3,7 +3,7 @@
 # Also for the vagrant installation
 
 # vagrant
-hostname: changeme.kloos.dev
+hostname: changeme.wiebekn.dev
 basedir: /var/www/vhosts
 project: changeme
 ipaddress: 192.168.33.199

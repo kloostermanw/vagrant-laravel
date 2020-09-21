@@ -19,6 +19,7 @@
     - wget
     - unzip
     - open-vm-tools
+    - net-tools
 
 - name: Install ntp
   yum: name=ntp state=present

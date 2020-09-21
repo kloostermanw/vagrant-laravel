@@ -10,15 +10,34 @@
     src: vhost.ssl.conf.j2
     dest: /etc/httpd/conf.d/{{project}}-ssl.conf
 
-- name: Copy star.kloos.dev.crt
+- name: Copy star.wiebekn.dev.crt
   copy:
-    src: star.kloos.dev.crt
+    src: star.wiebekn.dev.crt
     dest: /etc/pki/tls/certs/
 
-- name: Copy star.kloos.dev.key
+- name: Copy star.wiebekn.dev.key
   copy:
-    src: star.kloos.dev.key
+    src: star.wiebekn.dev.key
     dest: /etc/pki/tls/private/
+
+# <VirtualHost _default_:443>
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^\<VirtualHost\ \_default\_'
+    line: "<VirtualHost _default_:8443>"
+
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^SSLCertificateFile'
+    line: "SSLCertificateFile /etc/pki/tls/certs/star.wiebekn.dev.crt"
+
+- name: Ensure SSL Default site is not running on 443
+  lineinfile:
+    path: /etc/httpd/conf.d/ssl.conf
+    regexp: '^SSLCertificateKeyFile'
+    line: "SSLCertificateKeyFile /etc/pki/tls/private/star.wiebekn.dev.key"
 
 - name: composer install
   composer:
