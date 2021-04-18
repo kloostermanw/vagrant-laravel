@@ -8,4 +8,5 @@
     - geerlingguy.composer
     - phing
     - laravel
+    - nodejs
     - project
