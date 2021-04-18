@@ -1,5 +1,5 @@
 ---
-# These tasks install php 7.3
+# These tasks install php 8.0
 
 - name: epel-release
   yum: name=epel-release state=installed
@@ -14,8 +14,8 @@
     key: "{{ remi_repo_gpg_key_url }}"
     state: present
 
-- name: install php73
-  yum: name={{ packages }} enablerepo=epel,remi,remi-php73 state=installed
+- name: install php80
+  yum: name={{ packages }} enablerepo=epel,remi,remi-php80 state=installed
   vars:
     packages:
     - php
