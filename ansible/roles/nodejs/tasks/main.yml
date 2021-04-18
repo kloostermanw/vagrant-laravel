@@ -1,13 +1,13 @@
 ---
 
-- name: Download Node.js v10 repository installation script
+- name: Download Node.js v14 repository installation script
   get_url:
-    url: https://rpm.nodesource.com/setup_10.x
-    dest: /tmp/setup_10.sh
+    url: https://rpm.nodesource.com/setup_14.x
+    dest: /tmp/setup_nodejs.sh
     mode: 777
 
 - name: run the nodejs installation repository
-  shell: /tmp/setup_10.sh
+  shell: /tmp/setup_nodejs.sh
 
 - name: Install nodejs
   yum:
