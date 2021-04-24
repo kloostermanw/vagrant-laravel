@@ -17,13 +17,7 @@
                     <token key="db_database" value="${db.database}" />
                     <token key="db_username" value="${db.user}" />
                     <token key="db_password" value="${db.password}" />
-                    <token key="facebook_client_id" value="${facebook.client.id}" />
-                    <token key="facebook_client_secret" value="${facebook.client.secret}" />
-                    <token key="facebook_url" value="${facebook.url}" />
-                    <token key="google_client_id" value="${google.client.id}" />
-                    <token key="google_client_secret" value="${google.client.secret}" />
-                    <token key="google_url" value="${google.url}" />
-                    <token key="slack_webhook_url" value="${slack.webhook.url}" />
+                    <token key="dawilog_dsn" value="${dawilog.dsn}" />
                 </replacetokens>
             </filterchain>
         </copy>
