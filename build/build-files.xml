@@ -19,6 +19,9 @@
             <fileset dir="${path.targetdir}${path.logsdir}">
                 <include name="**/**"/>
             </fileset>
+            <fileset dir="${path.targetdir}${path.bootstap.cache}">
+                <include name="**/**"/>
+            </fileset>
         </chmod>
 
         <echo msg="Copying uploaded files..." />
@@ -78,6 +81,15 @@
                 passthru="true"
                 checkreturn="true" />
 
+        <echo msg="Setting selinux permissions on the storage directory" />
+
+        <echo msg="Setting selinux permissions on the bootstrap/cache directory" />
+
+        <exec
+                command="chcon -t httpd_sys_content_rw_t bootstrap/cache -R"
+                dir="${path.targetdir}"
+                passthru="true"
+                checkreturn="true" />
     </target>
 
 </project>
