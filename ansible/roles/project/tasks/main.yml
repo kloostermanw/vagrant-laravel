@@ -70,6 +70,19 @@
 - name: Apply new SELinux file context to filesystem
   command: restorecon -irv {{basedir}}/{{project}}/*
 
+- name: check md5 of AppServiceProvider
+  stat:
+    path: "{{basedir}}/{{project}}/src/app/Providers/AppServiceProvider.php"
+    checksum_algorithm: md5
+    get_checksum: yes
+  register: AppServiceProvider
+
+- name: Copy AppServiceProvider.php
+  copy:
+    src: AppServiceProvider.php
+    dest: "{{basedir}}/{{project}}/src/app/Providers/"
+  when: AppServiceProvider.stat.checksum == '2472f6584237b1d5f7e91e450bebefa5'
+
 - name: restart httpd
   service:
     name: httpd
