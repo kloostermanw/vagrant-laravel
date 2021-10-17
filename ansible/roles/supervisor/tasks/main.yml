@@ -1,0 +1,27 @@
+---
+
+- name: Install supervisor
+  yum:
+    name: supervisor
+    state: present
+  tags: supervisor
+
+- name: create /etc/supervisord.d/laravel-worker.conf
+  template:
+    src: laravel-worker.ini.j2
+    dest: /etc/supervisord.d/laravel-worker.ini
+
+- name: ensure file /var/log/laravel-worker.log exists
+  copy:
+    content: ""
+    dest: /var/log/laravel-worker.log
+    force: no
+    group: vagrant
+    owner: vagrant
+    mode: 0664
+
+- name: Start supervisord service
+  service:
+    name: mariadb
+    state: started
+    enabled: yes

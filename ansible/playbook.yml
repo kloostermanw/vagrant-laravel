@@ -10,3 +10,6 @@
     - laravel
     - nodejs
     - project
+    - supervisor
+    - redis
+    - zsh
