@@ -14,6 +14,9 @@
     key: "{{ remi_repo_gpg_key_url }}"
     state: present
 
+- name: enable remi-php80
+  shell: yum-config-manager --enable remi-php80
+
 - name: install php80
   yum: name={{ packages }} enablerepo=epel,remi,remi-php80 state=installed
   vars:
